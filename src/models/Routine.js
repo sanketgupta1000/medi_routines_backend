@@ -8,7 +8,7 @@ const routineSchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 
     // date and time of creation of the routine
-    createdAt: {type: Date, default: Date.now},
+    createdAt: {type: Date, default: Date.now()},
     
     // will use an array of subdocs to store the medicines for a routine
     // also, since a medicine can be of one of two types, must use dynamic reference using refPath

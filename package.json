@@ -2,10 +2,10 @@
   "name": "medi-routines-backend",
   "version": "1.0.0",
   "description": "A Web App to manage routines for medicines",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
   "author": "Sanket Gupta",
   "license": "ISC",
@@ -17,5 +17,10 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.3"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^10.1.4",
+    "supertest": "^7.1.1"
   }
 }

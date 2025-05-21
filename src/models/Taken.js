@@ -14,8 +14,17 @@ const takenSchema = new mongoose.Schema({
     // since by default, subdocs have _id field, so can use that to refer to the medicine
     routineMedicine: { type: mongoose.Schema.Types.ObjectId, required: true },
 
+    // date in string
+    date: { type: String, required: true },
+
+    // day in string
+    day: { type: String, enum: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], required: true },
+
+    // time in string
+    time: { type: String, enum: ["Morning", "Afternoon", "Evening", "Night"], required: true },
+
     // date and time of taking the medicine, day can be derived from this
-    takenAt: { type: Date, default: Date.now }
+    takenAt: { type: Date, default: Date.now() }
 });
 
 const Taken = mongoose.model("Taken", takenSchema);
