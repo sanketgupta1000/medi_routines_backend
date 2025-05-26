@@ -6,7 +6,6 @@ const User = require('../models/User');
 const UserDefinedMedicine = require('../models/UserDefinedMedicine');
 const PredefinedMedicine = require('../models/PredefinedMedicine');
 const mongoose = require('mongoose');
-const { path } = require('../../app');
 
 // method to create a new routine
 const createRoutine = async(req, res, next)=>
@@ -248,7 +247,7 @@ const getUpcomingRoutines = async (req, res, next) =>
 
         // first, get the user id from request
         const userId = req.user.userId;
-        const validUserId = new mongoose.Types.ObjectId(userId);
+        const validUserId = new mongoose.Types.ObjectId(String(userId));
     
         // fetch the user
         let user;

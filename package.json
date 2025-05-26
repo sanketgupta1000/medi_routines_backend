@@ -4,7 +4,7 @@
   "description": "A Web App to manage routines for medicines",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon server.js",
     "test": "jest --verbose"
   },
   "author": "Sanket Gupta",
