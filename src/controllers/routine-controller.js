@@ -127,6 +127,18 @@ const createRoutine = async(req, res, next)=>
                 }
             );
             await session.endSession();
+
+            // send the routine with medicines populated
+            for(let i = 0; i<medicines.length; i++)
+            {
+                routine.medicines[i].medicine = 
+
+                (routine.medicines[i].medicineType==="UserDefinedMedicine")?
+                userDefinedMedicines.find(u=>u._id.equals(routine.medicines[i].medicine))
+                :
+                predefinedMedicines.find(p=>p._id.equals(routine.medicines[i].medicine))
+            }
+
             res.status(201).json({routine: routine.toObject({getters: true})});
 
         }

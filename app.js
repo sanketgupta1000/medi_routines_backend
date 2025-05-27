@@ -22,7 +22,7 @@ const corsOptions = {
     ?
     ['https://medicines-tracker.vercel.app']
     :
-    ['http://localhost:3000'],
+    ['http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
