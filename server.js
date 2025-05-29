@@ -2,6 +2,7 @@
 const app = require('./app.js');
 const mongoose = require('mongoose');
 const config = require('./src/configs/config.js');
+const { scheduleDailyNotifications } = require('./src/services/scheduler-service.js');
 
 // connect to mongodb
 mongoose
@@ -12,6 +13,9 @@ mongoose
     app.listen(3000, () => {
         console.log('Server is running on port 3000');
     });
+
+    // start the notification service
+    scheduleDailyNotifications();
 })
 .catch((err) => {
     console.log('Error connecting to MongoDB');

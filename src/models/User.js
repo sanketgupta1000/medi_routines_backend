@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     // since with each update on routine, need to update on user too
     routines : [{type: mongoose.Schema.Types.ObjectId, ref: 'Routine'}],
     // user's own defined medicines
-    userDefinedMedicines: [{type: mongoose.Schema.Types.ObjectId, ref:'UserDefinedMedicine'}]
+    userDefinedMedicines: [{type: mongoose.Schema.Types.ObjectId, ref:'UserDefinedMedicine'}],
+    fcmTokens: [{type:String}]  // for push notifications
 });
 
 const User = mongoose.model('User', userSchema);

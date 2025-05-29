@@ -36,4 +36,14 @@ router.get(
     userController.getUser
 );
 
+// route for FCM token registration
+router.post(
+    "/register-fcm-token",
+    secureRoute, // User must be logged in
+    [
+        check("fcmToken").not().isEmpty() // Validate that a token is provided
+    ],
+    userController.registerFcmToken // New controller method
+);
+
 module.exports = router;

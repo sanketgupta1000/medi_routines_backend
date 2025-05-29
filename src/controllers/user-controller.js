@@ -198,8 +198,53 @@ const getUser = async(req, res, next)=>
     }
 };
 
+// method to register a new fcm token
+const registerFcmToken = async (req, res, next) =>
+{
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+    {
+        throw new HttpError("Invalid FCM token provided.", 422);
+    }
+
+    const { fcmToken } = req.body;
+    const userId = req.user.userId;
+
+    try
+    {
+        const user = await User.findById(userId);
+        if (!user)
+        {
+            return next(new HttpError("User not found.", 401));
+        }
+
+        // Add token if it's new for this user to prevent duplicates
+        if (!user.fcmTokens.includes(fcmToken))
+        {
+            user.fcmTokens.push(fcmToken);
+            try
+            {
+                await user.save();
+            }
+            catch(err)
+            {
+                console.error("UserController :: registerFcmToken :: ", err);
+                throw new HttpError("Failed to add fcm token", 500);
+            }
+        }
+
+        res.status(200).end();
+    }
+    catch (err)
+    {
+        console.log(err);
+        return next(err);
+    }
+};
+
 module.exports = {
     signup,
     login,
-    getUser
+    getUser,
+    registerFcmToken
 };
