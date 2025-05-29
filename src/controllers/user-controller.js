@@ -131,7 +131,7 @@ const login = async(req, res, next)=>
                 },
                 config.jwtSecret,
                 {
-                    expiresIn: "4h"
+                    expiresIn: "24h"
                 }
             );
 
