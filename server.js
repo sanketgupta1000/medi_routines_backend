@@ -11,7 +11,7 @@ mongoose
     console.log('Connected to MongoDB');
     // start the server
     app.listen(config.port, () => {
-        console.log('Server is running on port 3000');
+        console.log(`Server is running on port ${config.port}`);
     });
 
     // start the notification service
