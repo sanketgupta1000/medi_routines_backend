@@ -43,7 +43,7 @@ const scheduleDailyNotifications = () =>
                 }
 
                 // Check if it's 10 AM for the user
-                if (currentHourInUserTimezone === 23)
+                if (currentHourInUserTimezone === 10)
                 {
                     console.log(`[Scheduler] It's 10 AM for user ${user.email} in ${user.timezone}. Fetching routines.`);
 
