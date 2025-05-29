@@ -6,6 +6,7 @@ const User = require('../models/User');
 const UserDefinedMedicine = require('../models/UserDefinedMedicine');
 const PredefinedMedicine = require('../models/PredefinedMedicine');
 const mongoose = require('mongoose');
+const Taken = require('../models/Taken');
 
 // method to create a new routine
 const createRoutine = async(req, res, next)=>
@@ -380,10 +381,93 @@ const getUpcomingRoutines = async (req, res, next) =>
 
 }
 
+const deleteRoutineById = async(req, res, next)=>
+{
+    try
+    {
+
+        // get the user id and routine id
+        const userId = req.user.userId;
+        const routineId = req.params.routineId;
+
+        const validUserId = new mongoose.Types.ObjectId(String(userId));
+        const validRoutineId = new mongoose.Types.ObjectId(String(routineId));
+
+        // find the routine
+        let routine;
+        try
+        {
+            routine = await Routine.findOne({
+                _id: validRoutineId,
+                user: validUserId
+            });
+        }
+        catch(err)
+        {
+            console.log("RoutineController :: deleteRoutineById :: ", err);
+            throw new HttpError("Failed to fetch necessary data, please try again.", 500);
+        }
+
+        if(!routine)
+        {
+            // did not find
+            throw new HttpError("Routine not found", 404);
+        }
+
+        // found
+        // now fetch the user too
+        let user;
+        try
+        {
+            user = await User.findById(validUserId);
+        }
+        catch(err)
+        {
+            console.log("RoutineController :: deleteRoutineById :: ", err);
+            throw new HttpError("Failed to fetch necessary data, please try again.", 500);
+        }
+
+        // got the user
+        // now delete the routine from Routines model, from the user document
+        // as well as remove all the taken medicines as a transaction
+        const session = await mongoose.startSession();
+        try
+        {
+            await session.withTransaction(async ()=>
+            {
+                // delete routine
+                await routine.deleteOne({session});
+                // remove from user
+                user.routines = user.routines.filter(r=>!r.equals(validRoutineId));
+                await user.save({session});
+                // delete all takens
+                await Taken.deleteMany({
+                    routine: validRoutineId
+                }, {session});
+            })
+        }
+        catch(err)
+        {
+            console.log("RoutineController :: deleteRoutineById :: ", err);
+            throw new HttpError("Failed to delete medicine", 500);
+        }
+
+        // deleted
+        res.status(204).end();
+
+    }
+    catch(e)
+    {
+        console.log(e);
+        return next(e);
+    }
+}
+
 // exporting the methods
 module.exports = {
     createRoutine,
     getAllRoutines,
     getRoutineById,
-    getUpcomingRoutines
+    getUpcomingRoutines,
+    deleteRoutineById
 };

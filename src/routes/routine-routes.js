@@ -53,4 +53,11 @@ router.get(
     routineController.getRoutineById
 );
 
+// route to delete a routine by id
+router.delete(
+    "/:routineId",
+    secureRoute,
+    routineController.deleteRoutineById
+);
+
 module.exports = router;

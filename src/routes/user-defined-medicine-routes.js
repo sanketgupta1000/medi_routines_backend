@@ -24,4 +24,12 @@ router.get(
     userDefinedMedicineController.getAllUserDefinedMedicines
 );
 
+// route to delete a user-defined-medicine
+router.delete(
+    "/:userDefinedMedicineId",
+    // secure the route
+    secureRoute,
+    userDefinedMedicineController.deleteUserDefinedMedicine
+);
+
 module.exports = router;
