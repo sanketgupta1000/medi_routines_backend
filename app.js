@@ -20,7 +20,7 @@ const userDefinedMedicineRoutes = require("./src/routes/user-defined-medicine-ro
 const corsOptions = {
     origin: config.nodeEnv === 'production'
     ?
-    ['https://medi-routines-frontend.vercel.app']
+    ['https://medi-routines-frontend.vercel.app', 'https://mediroutines.sanket.codes']
     :
     ['http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
