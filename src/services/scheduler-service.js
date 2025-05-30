@@ -10,8 +10,8 @@ const HttpError = require('../models/HttpError');
 // More frequent (e.g., every 15 or 30 mins) gives more precision but more load.
 const scheduleDailyNotifications = () =>
 {
-    cron.schedule('0,30 * * * *', async () =>
-    { // Runs at 0 and 30 min of every hour
+    cron.schedule('0,30, 59 * * * *', async () =>
+    { // Runs at 0 and 30 min and 59 min of every hour
         console.log(`[Scheduler] Running hourly check for 10 AM notifications at ${new Date().toISOString()}`);
 
         try {
