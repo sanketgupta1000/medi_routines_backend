@@ -39,6 +39,11 @@ app.use("/api/taken", takenRoutes);
 app.use("/api/predefined-medicine", predefinedMedicineRoutes);
 app.use("/api/user-defined-medicine", userDefinedMedicineRoutes);
 
+// for keeping the server alive via poll
+app.get("/cron/trigger", (req, res)=>
+{
+    res.send("Cron trigger succeeded!");
+});
 
 // middleware to handle 404 errors
 // no routes matched
